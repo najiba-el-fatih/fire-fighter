@@ -1,7 +1,7 @@
 #include <Arduino_FreeRTOS.h>
 #include <AFMotor.h>
 #define threshold1 30
-#define threshold2 70
+#define threshold2 35
 #define delayMotor 500
 #define delayBuzzer 500
 #define delayRelay 3000
@@ -43,9 +43,9 @@ void setup() {
 void turnright() {
   motorFR.run(RELEASE);
   motorBR.run(RELEASE);
-  motorFL.run(FORWARD);
+  motorFL.run(BACKWARD);
   motorFL.setSpeed(150);
-  motorBL.run(FORWARD);
+  motorBL.run(BACKWARD);
   motorBL.setSpeed(150);
 }
 
@@ -61,9 +61,9 @@ void turnleft(){
 void forward() {
   motorFR.run(FORWARD);
   motorFR.setSpeed(150);
-  motorBR.run(BACKWARD);
+  motorBR.run(FORWARD);
   motorBR.setSpeed(150);
-  motorFL.run(FORWARD);
+  motorFL.run(BACKWARD);
   motorFL.setSpeed(150); 
   motorBL.run(BACKWARD);
   motorBL.setSpeed(150);
@@ -95,7 +95,7 @@ void Task(void *pvParameters) {
  //Buzzerstate=etatduCF;
    valeur = analogRead(ACF);
    Serial.print("Etat du CF :  ");
-   Serial.print(etatduCF);
+   Serial.println(etatduCF);
 // vTaskDelay(1000/portTICK_PERIOD_MS);
     etatduCFg = digitalRead(CFg);
     Serial.print("\tEtat du CFg : ");
@@ -120,7 +120,7 @@ void Task(void *pvParameters) {
       Serial.println(valeur); 
       //delay(1000);
 //  vTaskDelay(1000/portTICK_PERIOD_MS); 
-while(analogRead(ACF) <=threshold1 &&  analogRead(ACF)>=threshold2){
+while(analogRead(ACF) <=threshold1 ){
     Stop ();
     digitalWrite(relay, LOW); // this shouldn't happen until the robot reaches the flame so i need an if condition here 
    // vTaskDelay( delayRelay / portTICK_PERIOD_MS);

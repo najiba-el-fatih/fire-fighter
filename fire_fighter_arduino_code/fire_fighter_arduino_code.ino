@@ -8,6 +8,7 @@
 void TaskBuzzer(void *pvParameters);
 void Task(void *pvParameters);
 
+#define threshold 40
 #define CF 52
 #define ACF A8
 #define CFg 51
